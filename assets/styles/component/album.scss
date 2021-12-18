@@ -1,7 +1,10 @@
 .album {
     @extend .py-4;
     @extend .py-md-5;
-    @extend .bg-light;
+
+    .row {
+        @extend .justify-content-center;
+    }
 
     .col {
         @extend .col-12;

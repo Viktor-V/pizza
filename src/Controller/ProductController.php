@@ -8,11 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class ProductController extends AbstractController
 {
-    #[Route(path: '/', name: 'homepage')]
+    #[Route(path: '/product', name: 'product')]
     public function __invoke(): Response
     {
-        return $this->render('pizza/list.html.twig');
+        return $this->render('pizza/product.html.twig');
     }
 }
