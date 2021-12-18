@@ -1,0 +1,49 @@
+.album {
+    @extend .py-4;
+    @extend .py-md-5;
+    @extend .bg-light;
+
+    .col {
+        @extend .col-12;
+        @extend .col-md-6;
+        @extend .col-lg-4;
+        @extend .mb-4;
+    }
+
+    .card {
+        @extend .shadow-sm;
+
+        .image {
+            @extend .w-100;
+            @extend .p-4;
+            background: $gray-200;
+
+            img {
+                @extend .w-100;
+                height: 225px;
+
+                @extend .card-img-top;
+            }
+        }
+
+        .card-title-link {
+            @extend .link-dark;
+            @extend .text-decoration-none;
+        }
+
+        .card-content {
+            @extend .justify-content-between;
+            @extend .align-items-center;
+            @extend .d-flex;
+
+            .btn {
+                @extend .btn-sm;
+                @extend .btn-outline-secondary;
+            }
+
+            .price {
+                @extend .text-muted;
+            }
+        }
+    }
+}

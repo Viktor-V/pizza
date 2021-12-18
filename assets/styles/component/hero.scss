@@ -1,0 +1,23 @@
+.hero {
+    @extend .bg-white;
+
+    .container {
+        @extend .py-5;
+        @extend .text-center;
+    }
+
+    .row {
+        @extend .py-lg-5;
+
+        .content {
+            @extend .col-lg-6;
+            @extend .col-md-8;
+            @extend .mx-auto;
+        }
+    }
+}
+
+.col-md-6 {
+    max-width: 100%;
+    flex-grow: 1;
+}

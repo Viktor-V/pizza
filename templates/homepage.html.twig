@@ -1,5 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/base.html.twig' %}
 
 {% block body %}
-    <h1>{{ 'Homepage'|trans }}</h1>
+    <div class="album">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <a href="#" class="image">
+                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
+                        </a>
+
+                        <div class="card-body">
+                            <a href="#" class="card-title-link">
+                                <h5 class="card-title">{{ 'MacDac Pizza' }}</h5>
+                            </a>
+
+                            <div class="card-content">
+                                <button type="button" class="btn">{{ 'View' }}</button>
+                                <small class="price">9.99EUR</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <a href="#" class="image">
+                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
+                        </a>
+
+                        <div class="card-body">
+                            <a href="#" class="card-title-link">
+                                <h5 class="card-title">{{ 'Lovely Mushroom Pizza' }}</h5>
+                            </a>
+
+                            <div class="card-content">
+                                <button type="button" class="btn">{{ 'View' }}</button>
+                                <small class="price">9.99EUR</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <a href="#" class="image">
+                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
+                        </a>
+
+                        <div class="card-body">
+                            <a href="#" class="card-title-link">
+                                <h5 class="card-title">{{ 'Custom' }}</h5>
+                            </a>
+
+                            <div class="card-content">
+                                <button type="button" class="btn">{{ 'View' }}</button>
+                                <small class="price">0.00EUR</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

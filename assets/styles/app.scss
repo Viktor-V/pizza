@@ -1,5 +1,10 @@
 @import "~bootstrap";
 
-body {
-    background-color: lightgray;
+@import "component/hero";
+@import "component/album";
+
+main {
+    @extend .container-xl;
+    @extend .py-3;
 }
+
