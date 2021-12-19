@@ -1,5 +1,9 @@
-controllers:
+pizza_controllers:
     resource: ../../src/Pizza/Presentation/Controller/
+    type: annotation
+
+pizza_api_v1_controllers:
+    resource: ../../src/Pizza/Api/V1/Controller/
     type: annotation
 
 kernel:

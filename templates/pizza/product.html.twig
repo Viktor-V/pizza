@@ -15,27 +15,24 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ pizza.name }}</h5>
 
-                            {% for ingredient in pizza.ingredientList %}
-                                <div class="input-group mt-3">
-                                    <input type="text"
-                                           class="form-control"
-                                           value="{{ ingredient.name }} - ({{ ingredient.price }})"
-                                           aria-label="{{ ingredient.name }} - ({{ ingredient.price }})"
-                                           disabled
-                                    >
-                                    <button class="btn btn-outline-danger" type="button">&#10005;</button>
-                                </div>
-                            {% endfor %}
+                            <div id="pizza-ingredients">
+                                {% for ingredient in pizza.ingredientList %}
+                                    {% include 'pizza/partial/ingredient.html.twig' with {ingredient: ingredient} %}
+                                {% endfor %}
+                            </div>
 
-                            <div class="input-group mt-3">
-                                <select class="form-select" aria-label="{{ 'Ingredient' }}">
+                            <div class="form-group mt-3">
+                                <select class="form-select"
+                                        aria-label="{{ 'Ingredient' }}"
+                                        data-controller="add-ingredient"
+                                        data-action="add-ingredient#onSelect"
+                                        data-add-ingredient-url-value="{{ path('api.v1.pizza.ingredient.add') }}"
+                                >
                                     <option selected>{{ 'Select Ingredient' }}</option>
                                     {% for ingredient in pizza.ingredientList %}
                                         <option>{{ ingredient.name }} - ({{ ingredient.price }})</option>
                                     {% endfor %}
                                 </select>
-
-                                <button class="btn btn-outline-danger" type="button">&#10005;</button>
                             </div>
 
                             <button type="button" class="btn btn-primary w-100 mt-3">{{ 'Add to card' }}</button>
@@ -44,12 +41,10 @@
 
                         <div class="card-footer text-center">
                             <span class="price">
-                                {{ pizza.price }}
+                                <span id="price">{{ pizza.price }}</span>
                                 <span class="text-danger user-select-none" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
                             </span>
                         </div>
-
-                        <div data-controller="hello"></div>
                     </div>
                 </div>
             </div>

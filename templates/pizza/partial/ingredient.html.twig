@@ -1,0 +1,14 @@
+<div class="input-group mt-3"
+     data-controller="delete-ingredient"
+     data-delete-ingredient-url-value="{{ path('api.v1.pizza.ingredient.delete') }}"
+>
+    <input type="text"
+           class="form-control"
+           value="{{ ingredient.name }} - ({{ ingredient.price }})"
+           aria-label="{{ ingredient.name }} - ({{ ingredient.price }})"
+           disabled
+    >
+
+    <button class="btn btn-outline-danger" type="button" data-action="delete-ingredient#onDelete">&#10005;</button>
+</div>
+

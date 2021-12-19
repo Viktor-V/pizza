@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pizza\Presentation\Controller;
+namespace App\Pizza\Api\V1\Controller\Ingredient;
 
 use App\Money\Domain\Entity\Money;
 use App\Money\Domain\Type\Amount;
@@ -12,13 +12,13 @@ use App\Pizza\Domain\Service\PizzaService;
 use App\Pizza\Domain\Type\Name;
 use ArrayIterator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PizzaController extends AbstractController
+class AddController extends AbstractController
 {
-    #[Route(path: '/pizza/product', name: 'pizza.product', methods: ['GET'])]
-    public function __invoke(): Response
+    #[Route(path: '/api/v1/pizza/ingredient/add', name: 'api.v1.pizza.ingredient.add', methods: ['POST'])]
+    public function __invoke(): JsonResponse
     {
         $defaultCurrency = new Currency('EUR');
 
@@ -38,12 +38,16 @@ class PizzaController extends AbstractController
             $sausages,
             $slicedOnion,
             $mozzarellaCheese,
-            $oregano
+            $oregano,
+            $bacon
         ]);
 
         $pizzaService = new PizzaService($defaultCurrency, 50);
         $pizza = $pizzaService->initialize(new Name('MacDac Pizza'), $macDacIngredientList);
 
-        return $this->render('pizza/product.html.twig', ['pizza' => $pizza]);
+        return new JsonResponse([
+            'ingredient' => $this->render('pizza/partial/ingredient.html.twig', ['ingredient' => $bacon])->getContent(),
+            'price' => (string) $pizza->price()
+        ]);
     }
 }
