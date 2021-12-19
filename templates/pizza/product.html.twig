@@ -3,7 +3,7 @@
 {% block title %}{{ pizza.name }}{% endblock %}
 
 {% block body %}
-    <div class="album">
+    <div class="album product">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -21,7 +21,7 @@
                                 {% endfor %}
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <select class="form-select"
                                         aria-label="{{ 'Ingredient' }}"
                                         data-controller="add-ingredient"
@@ -35,14 +35,24 @@
                                 </select>
                             </div>
 
-                            <button type="button" class="btn btn-primary w-100 mt-3">{{ 'Add to card' }}</button>
-                            <a href="{{ path('pizza.album') }}" class="btn btn-outline-secondary w-100 mt-3">{{ 'Back' }}</a>
+                            <button type="button" class="btn-add">{{ 'Add to card' }}</button>
+
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="{{ path('pizza.reset') }}" class="btn-reset">{{ 'Reset' }}</a>
+                                </div>
+
+                                <div class="col-6">
+                                    <a href="{{ path('pizza.album') }}" class="btn-back">{{ 'Back' }}</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-footer text-center">
                             <span class="price">
                                 <span id="price">{{ pizza.price }}</span>
-                                <span class="text-danger user-select-none" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
+                                <span class="price-help" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
                             </span>
                         </div>
                     </div>

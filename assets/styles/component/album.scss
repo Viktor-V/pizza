@@ -48,5 +48,51 @@
                 @extend .text-muted;
             }
         }
+
+        .price-help {
+            @extend .text-danger;
+            @extend .user-select-none;
+        }
+    }
+}
+
+.product {
+    .card {
+        .card-body {
+            .form-group,
+            .input-group {
+                @extend .mt-3;
+            }
+
+            .btn-delete {
+                @extend .btn;
+                @extend .btn-outline-danger;
+            }
+
+            .btn-add {
+                @extend .btn;
+                @extend .btn-primary;
+                @extend .w-100;
+                @extend .mt-3;
+            }
+
+            .btn-reset {
+                @extend .btn;
+                @extend .btn-outline-danger;
+                @extend .w-100;
+                @extend .mt-3;
+            }
+
+            .btn-back {
+                @extend .btn;
+                @extend .btn-outline-secondary;
+                @extend .w-100;
+                @extend .mt-3;
+            }
+        }
+
+        .card-footer {
+            @extend .text-center;
+        }
     }
 }
