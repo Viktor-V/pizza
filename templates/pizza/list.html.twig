@@ -4,62 +4,29 @@
     <div class="album">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <a href="#" class="image">
-                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
-                        </a>
-
-                        <div class="card-body">
-                            <a href="#" class="card-title-link">
-                                <h5 class="card-title">{{ 'MacDac Pizza' }}</h5>
+                {% for pizza in pizzas %}
+                    <div class="col">
+                        <div class="card">
+                            <a href="{{ path('pizza.product') }}" class="image">
+                                <img src="{{ asset('image/pizza.png') }}" title="{{ pizza.name }}" alt="{{ pizza.name }}">
                             </a>
 
-                            <div class="card-content">
-                                <button type="button" class="btn">{{ 'View' }}</button>
-                                <small class="price">9.99EUR</small>
+                            <div class="card-body">
+                                <a href="{{ path('pizza.product') }}" class="card-title-link">
+                                    <h5 class="card-title">{{ pizza.name }}</h5>
+                                </a>
+
+                                <div class="card-content">
+                                    <a href="{{ path('pizza.product') }}" class="btn">{{ 'View' }}</a>
+                                    <span class="price">
+                                        {{ pizza.price }}
+                                        <span class="text-danger user-select-none" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <a href="#" class="image">
-                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
-                        </a>
-
-                        <div class="card-body">
-                            <a href="#" class="card-title-link">
-                                <h5 class="card-title">{{ 'Lovely Mushroom Pizza' }}</h5>
-                            </a>
-
-                            <div class="card-content">
-                                <button type="button" class="btn">{{ 'View' }}</button>
-                                <small class="price">9.99EUR</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <a href="#" class="image">
-                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
-                        </a>
-
-                        <div class="card-body">
-                            <a href="#" class="card-title-link">
-                                <h5 class="card-title">{{ 'Custom' }}</h5>
-                            </a>
-
-                            <div class="card-content">
-                                <button type="button" class="btn">{{ 'View' }}</button>
-                                <small class="price">0.00EUR</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

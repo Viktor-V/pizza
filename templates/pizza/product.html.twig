@@ -1,6 +1,6 @@
 {% extends 'layout/base.html.twig' %}
 
-{% block title %}{{ 'MacDac Pizza' }}{% endblock %}
+{% block title %}{{ pizza.name }}{% endblock %}
 
 {% block body %}
     <div class="album">
@@ -9,29 +9,47 @@
                 <div class="col">
                     <div class="card">
                         <span class="image">
-                            <img src="{{ asset('image/pizza.png') }}" title="{{ 'MacDac Pizza' }}" alt=""{{ 'MacDac Pizza' }}>
+                            <img src="{{ asset('image/pizza.png') }}" title="{{ pizza.name }}" alt=""{{ pizza.name }}>
                         </span>
 
                         <div class="card-body">
-                            <h5 class="card-title">{{ 'MacDac Pizza' }}</h5>
+                            <h5 class="card-title">{{ pizza.name }}</h5>
+
+                            {% for ingredient in pizza.ingredientList %}
+                                <div class="input-group mt-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="{{ ingredient.name }} - ({{ ingredient.price }})"
+                                           aria-label="{{ ingredient.name }} - ({{ ingredient.price }})"
+                                           disabled
+                                    >
+                                    <button class="btn btn-outline-danger" type="button">&#10005;</button>
+                                </div>
+                            {% endfor %}
 
                             <div class="input-group mt-3">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select class="form-select" aria-label="{{ 'Ingredient' }}">
+                                    <option selected>{{ 'Select Ingredient' }}</option>
+                                    {% for ingredient in pizza.ingredientList %}
+                                        <option>{{ ingredient.name }} - ({{ ingredient.price }})</option>
+                                    {% endfor %}
                                 </select>
 
                                 <button class="btn btn-outline-danger" type="button">&#10005;</button>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mt-3">{{ 'Add to card' }}</button>
+                            <button type="button" class="btn btn-primary w-100 mt-3">{{ 'Add to card' }}</button>
+                            <a href="{{ path('pizza.album') }}" class="btn btn-outline-secondary w-100 mt-3">{{ 'Back' }}</a>
                         </div>
 
                         <div class="card-footer text-center">
-                            <span class="price">9.99EUR</span>
+                            <span class="price">
+                                {{ pizza.price }}
+                                <span class="text-danger user-select-none" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
+                            </span>
                         </div>
+
+                        <div data-controller="hello"></div>
                     </div>
                 </div>
             </div>
