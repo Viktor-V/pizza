@@ -12,7 +12,7 @@ class CurrencyType extends StringType
 {
     public const NAME = 'currency';
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return $value instanceof Currency ? $value->currency() : $value;
     }

@@ -12,7 +12,7 @@ class AmountType extends IntegerType
 {
     public const NAME = 'amount';
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return $value instanceof Amount ? $value->value() : $value;
     }

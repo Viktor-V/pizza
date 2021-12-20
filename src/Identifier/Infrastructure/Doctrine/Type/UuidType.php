@@ -12,7 +12,7 @@ class UuidType extends GuidType
 {
     public const NAME = 'uuid';
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return $value instanceof Uuid ? (string) $value : $value;
     }

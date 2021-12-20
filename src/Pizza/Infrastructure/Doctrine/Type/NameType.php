@@ -12,7 +12,7 @@ class NameType extends StringType
 {
     public const NAME = 'name';
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return $value instanceof Name ? (string) $value : $value;
     }
