@@ -1,6 +1,11 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            currency: 'App\Money\Infrastructure\Doctrine\Type\CurrencyType'
+            amount: 'App\Money\Infrastructure\Doctrine\Type\AmountType'
+            name: 'App\Pizza\Infrastructure\Doctrine\Type\NameType'
+            uuid: 'App\Identifier\Infrastructure\Doctrine\Type\UuidType'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
@@ -10,9 +15,15 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            Pizza:
                 is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                type: attribute
+                dir: '%kernel.project_dir%/src/Pizza/Domain/Entity'
+                prefix: 'App\Pizza\Domain\Entity'
+                alias: Pizza
+            Money:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Money/Domain/Entity'
+                prefix: 'App\Money\Domain\Entity'
+                alias: Money
