@@ -16,11 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class Pizza
 {
-    #[ORM\ManyToMany(targetEntity: Ingredient::class)]
-    #[ORM\JoinTable(name: 'pizza_ingredients')]
-    #[ORM\JoinColumn(name: "pizza_uuid", referencedColumnName: "uuid")]
-    #[ORM\InverseJoinColumn(name: "ingredient_uuid", referencedColumnName: "uuid")]
-    private Collection $ingredientList;
+
 
     public function __construct(
         #[ORM\Id]
@@ -30,8 +26,12 @@ class Pizza
         private Name $name,
         #[ORM\Embedded(class: Money::class)]
         private Money $price,
+        #[ORM\ManyToMany(targetEntity: Ingredient::class)]
+        #[ORM\JoinTable(name: 'pizza_ingredients')]
+        #[ORM\JoinColumn(name: "pizza_uuid", referencedColumnName: "uuid")]
+        #[ORM\InverseJoinColumn(name: "ingredient_uuid", referencedColumnName: "uuid")]
+        private Collection $ingredientList
     ) {
-        $this->ingredientList = new ArrayCollection();
     }
 
     public function uuid(): Uuid
@@ -47,11 +47,6 @@ class Pizza
     public function price(): Money
     {
         return $this->price;
-    }
-
-    public function addIngredient(Ingredient $ingredient): void
-    {
-        $this->ingredientList->add($ingredient);
     }
 
     public function ingredientList(): ArrayCollection
