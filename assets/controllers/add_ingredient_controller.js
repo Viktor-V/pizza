@@ -1,16 +1,19 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static values = { url: String }
+    static targets = ['field'];
 
-    onSelect() {
+    onSelect(event) {
+        if (this.element.selectedIndex === 0) {
+            return;
+        }
+
+        this.load(this.fieldTargets[this.element.selectedIndex].dataset.url);
         this.element.selectedIndex = 0;
-
-        this.load();
     }
 
-    load() {
-        fetch(this.urlValue, {
+    load(url) {
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

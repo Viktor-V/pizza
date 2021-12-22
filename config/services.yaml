@@ -34,10 +34,19 @@ services:
         arguments:
             $currency: '%base_currency%'
 
+    App\Pizza\Domain\Repository\Contract\PizzaRepositoryInterface:
+        class: App\Pizza\Domain\Repository\PizzaRepository
+
+    App\Pizza\Domain\Repository\Contract\IngredientRepositoryInterface:
+        class: App\Pizza\Domain\Repository\IngredientRepository
+
     App\Pizza\Domain\Service\PizzaService:
         arguments:
             $currency: '@base.currency'
             $percentageToPrice: '%percentage_to_price%'
+
+    Symfony\Component\Cache\Adapter\AdapterInterface:
+        class: Symfony\Component\Cache\Adapter\FilesystemAdapter
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

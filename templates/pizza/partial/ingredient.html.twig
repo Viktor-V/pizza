@@ -1,6 +1,9 @@
 <div class="input-group mt-3"
      data-controller="delete-ingredient"
-     data-delete-ingredient-url-value="{{ path('api.v1.pizza.ingredient.delete') }}"
+     data-delete-ingredient-url-value="{{ path('api.v1.pizza.ingredient.delete', {
+         pizzaUuid: pizza.uuid,
+         ingredientUuid: ingredient.uuid
+     }) }}"
 >
     <input type="text"
            class="form-control"

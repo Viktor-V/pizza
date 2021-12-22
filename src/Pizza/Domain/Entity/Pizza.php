@@ -16,8 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class Pizza
 {
-
-
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: UuidType::NAME, unique: true)]
@@ -49,7 +47,7 @@ class Pizza
         return $this->price;
     }
 
-    public function ingredientList(): ArrayCollection
+    public function ingredientList(): Collection
     {
         return $this->ingredientList;
     }

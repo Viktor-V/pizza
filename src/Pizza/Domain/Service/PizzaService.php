@@ -11,7 +11,7 @@ use App\Money\Domain\Type\Currency;
 use App\Pizza\Domain\Entity\Ingredient;
 use App\Pizza\Domain\Entity\Pizza;
 use App\Pizza\Domain\Type\Name;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class PizzaService
 {
@@ -22,11 +22,11 @@ class PizzaService
     }
 
     /**
-     * @param ArrayCollection<Ingredient> $ingredientList
+     * @param Collection<Ingredient> $ingredientList
      */
     public function initialize(
         Name $name,
-        ArrayCollection $ingredientList
+        Collection $ingredientList
     ): Pizza {
         $price = 0;
         foreach ($ingredientList as $ingredient) {

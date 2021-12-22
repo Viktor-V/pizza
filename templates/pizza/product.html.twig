@@ -25,12 +25,18 @@
                                 <select class="form-select"
                                         aria-label="{{ 'Ingredient' }}"
                                         data-controller="add-ingredient"
-                                        data-action="add-ingredient#onSelect"
-                                        data-add-ingredient-url-value="{{ path('api.v1.pizza.ingredient.add') }}"
+                                        data-action="change->add-ingredient#onSelect"
                                 >
-                                    <option selected>{{ 'Select Ingredient' }}</option>
-                                    {% for ingredient in pizza.ingredientList %}
-                                        <option>{{ ingredient.name }} - ({{ ingredient.price }})</option>
+                                    <option data-add-ingredient-target="field" selected>{{ 'Select Ingredient' }}</option>
+                                    {% for ingredient in ingredients %}
+                                        <option data-add-ingredient-target="field"
+                                                data-url="{{ path('api.v1.pizza.ingredient.add', {
+                                                    pizzaUuid: pizza.uuid,
+                                                    ingredientUuid: ingredient.uuid
+                                                }) }}"
+                                        >
+                                            {{ ingredient.name }} - ({{ ingredient.price }})
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>

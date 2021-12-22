@@ -4,50 +4,41 @@ declare(strict_types=1);
 
 namespace App\Pizza\Api\V1\Controller\Ingredient;
 
-use App\Money\Domain\Entity\Money;
-use App\Money\Domain\Type\Amount;
-use App\Money\Domain\Type\Currency;
-use App\Pizza\Domain\Entity\Ingredient;
-use App\Pizza\Domain\Service\PizzaService;
-use App\Pizza\Domain\Type\Name;
-use ArrayIterator;
+use App\Identifier\Domain\Type\Uuid;
+use App\Pizza\Domain\Repository\Contract\IngredientRepositoryInterface;
+use App\Pizza\Domain\Repository\Contract\PizzaRepositoryInterface;
+use App\Pizza\Infrastructure\Service\PizzaUpdaterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AddController extends AbstractController
 {
-    #[Route(path: '/api/v1/pizza/ingredient/add', name: 'api.v1.pizza.ingredient.add', methods: ['POST'])]
-    public function __invoke(): JsonResponse
+    public function __construct(
+        private PizzaRepositoryInterface $pizzaRepository,
+        private IngredientRepositoryInterface $ingredientRepository,
+        private PizzaUpdaterService $pizzaUpdaterService
+    ) {
+    }
+
+    #[Route(path: '/api/v1/pizza/{pizzaUuid}/ingredient/{ingredientUuid}/add', name: 'api.v1.pizza.ingredient.add', methods: ['POST'])]
+    public function __invoke(Request $request, string $pizzaUuid, string $ingredientUuid): JsonResponse
     {
-        $defaultCurrency = new Currency('EUR');
+        $pizza = $this->pizzaRepository->find(new Uuid($pizzaUuid));
+        if (!$pizza) {
+            throw new NotFoundHttpException();
+        }
 
-        $tomato = new Ingredient(new Name('Tomato'), new Money(new Amount(50), $defaultCurrency));
-        $slicedMushrooms = new Ingredient(new Name('Sliced Mushrooms'), new Money(new Amount(50), $defaultCurrency));
-        $fetaCheese = new Ingredient(new Name('Feta Cheese'), new Money(new Amount(100), $defaultCurrency));
-        $sausages = new Ingredient(new Name('Sausages'), new Money(new Amount(100), $defaultCurrency));
-        $slicedOnion = new Ingredient(new Name('Sliced Onion'), new Money(new Amount(50), $defaultCurrency));
-        $mozzarellaCheese = new Ingredient(new Name('Mozzarella Cheese'), new Money(new Amount(30), $defaultCurrency));
-        $oregano = new Ingredient(new Name('Oregano'), new Money(new Amount(200), $defaultCurrency));
-        $bacon = new Ingredient(new Name('Bacon'), new Money(new Amount(100), $defaultCurrency));
-
-        $macDacIngredientList = new ArrayIterator([
-            $tomato,
-            $slicedMushrooms,
-            $fetaCheese,
-            $sausages,
-            $slicedOnion,
-            $mozzarellaCheese,
-            $oregano,
-            $bacon
-        ]);
-
-        $pizzaService = new PizzaService($defaultCurrency, 50);
-        $pizza = $pizzaService->initialize(new Name('MacDac Pizza'), $macDacIngredientList);
-
+        $ingredient = $this->ingredientRepository->find(new Uuid($ingredientUuid));
+        if (!$ingredient) {
+            throw new NotFoundHttpException();
+        }
+        
         return new JsonResponse([
-            'ingredient' => $this->render('pizza/partial/ingredient.html.twig', ['ingredient' => $bacon])->getContent(),
-            'price' => (string) $pizza->price()
+            'ingredient' => $this->render('pizza/partial/ingredient.html.twig', ['pizza' => $pizza, 'ingredient' => $ingredient])->getContent(),
+            'price' => (string)  $this->pizzaUpdaterService->addIngredient($pizza, $ingredient)->price()
         ]);
     }
 }

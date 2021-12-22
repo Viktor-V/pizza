@@ -7,17 +7,17 @@
                 {% for pizza in pizzas %}
                     <div class="col">
                         <div class="card">
-                            <a href="{{ path('pizza.product') }}" class="image">
+                            <a href="{{ path('pizza.product', {uuid: pizza.uuid}) }}" class="image">
                                 <img src="{{ asset('image/pizza.png') }}" title="{{ pizza.name }}" alt="{{ pizza.name }}">
                             </a>
 
                             <div class="card-body">
-                                <a href="{{ path('pizza.product') }}" class="card-title-link">
+                                <a href="{{ path('pizza.product', {uuid: pizza.uuid}) }}" class="card-title-link">
                                     <h5 class="card-title">{{ pizza.name }}</h5>
                                 </a>
 
                                 <div class="card-content">
-                                    <a href="{{ path('pizza.product') }}" class="btn">{{ 'View' }}</a>
+                                    <a href="{{ path('pizza.product', {uuid: pizza.uuid}) }}" class="btn">{{ 'View' }}</a>
                                     <span class="price">
                                         {{ pizza.price }}
                                         <span class="price-help" title="{{ "The price of a pizza equals the total of all its ingredients plus %s%% of the total for the preparation."|format(50) }}">&#9432;</span>
