@@ -26,14 +26,13 @@ class PizzaController extends AbstractController
     public function __invoke(string $uuid): Response
     {
         $pizza = $this->pizzaRepository->find(new Uuid($uuid));
-
-        $ingredients = $this->ingredientRepository->all();
         if (!$pizza) {
             throw new NotFoundHttpException();
         }
 
-        $pizza = $this->pizzaStorageService->get($pizza);
-
-        return $this->render('pizza/product.html.twig', ['pizza' => $pizza, 'ingredients' => $ingredients]);
+        return $this->render('pizza/product.html.twig', [
+            'pizza' => $this->pizzaStorageService->get($pizza),
+            'ingredients' => $this->ingredientRepository->all()
+        ]);
     }
 }
