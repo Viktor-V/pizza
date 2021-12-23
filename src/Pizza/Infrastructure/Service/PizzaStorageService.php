@@ -40,6 +40,8 @@ class PizzaStorageService
 
         $item->set($pizza);
 
+        $this->cache->save($item);
+
         return $item->get();
     }
 
@@ -48,5 +50,6 @@ class PizzaStorageService
         $this->cache->deleteItem(
             (string) $pizza->uuid() . $this->requestStack->getCurrentRequest()->getSession()->getId()
         );
+        $this->cache->commit();
     }
 }

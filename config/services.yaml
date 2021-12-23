@@ -46,7 +46,7 @@ services:
             $percentageToPrice: '%percentage_to_price%'
 
     Symfony\Component\Cache\Adapter\AdapterInterface:
-        class: Symfony\Component\Cache\Adapter\FilesystemAdapter
+        class: Symfony\Component\Cache\Adapter\ApcuAdapter
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

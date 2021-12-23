@@ -7,6 +7,7 @@ namespace App\Pizza\Presentation\Controller;
 use App\Identifier\Domain\Type\Uuid;
 use App\Pizza\Domain\Repository\Contract\IngredientRepositoryInterface;
 use App\Pizza\Domain\Repository\Contract\PizzaRepositoryInterface;
+use App\Pizza\Infrastructure\Service\PizzaStorageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +17,8 @@ class PizzaController extends AbstractController
 {
     public function __construct(
         private PizzaRepositoryInterface $pizzaRepository,
-        private IngredientRepositoryInterface $ingredientRepository
+        private IngredientRepositoryInterface $ingredientRepository,
+        private PizzaStorageService $pizzaStorageService
     ) {
     }
 
@@ -24,11 +26,13 @@ class PizzaController extends AbstractController
     public function __invoke(string $uuid): Response
     {
         $pizza = $this->pizzaRepository->find(new Uuid($uuid));
-        $ingredients = $this->ingredientRepository->all();
 
+        $ingredients = $this->ingredientRepository->all();
         if (!$pizza) {
             throw new NotFoundHttpException();
         }
+
+        $pizza = $this->pizzaStorageService->get($pizza);
 
         return $this->render('pizza/product.html.twig', ['pizza' => $pizza, 'ingredients' => $ingredients]);
     }
