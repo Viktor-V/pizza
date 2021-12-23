@@ -19,7 +19,7 @@ class AmountType extends IntegerType
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Amount
     {
-        return $value ? new Amount($value) : null;
+        return new Amount($value);
     }
 
     public function getName(): string

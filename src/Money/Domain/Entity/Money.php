@@ -17,7 +17,7 @@ class Money
 
     public function __construct(
         #[ORM\Column(type: AmountType::NAME)]
-        private ?Amount $amount = null,
+        private Amount $amount,
         #[ORM\Column(type: CurrencyType::NAME, length: 3)]
         private Currency $currency
     ) {
@@ -35,8 +35,6 @@ class Money
 
     public function __toString()
     {
-        $amount = $this->amount ? $this->amount->value() : 0;
-
-        return sprintf('%.2f%s', ($amount / self::PRECISION), $this->currency->currency());
+        return sprintf('%.2f%s', ($this->amount->value() / self::PRECISION), $this->currency->currency());
     }
 }
