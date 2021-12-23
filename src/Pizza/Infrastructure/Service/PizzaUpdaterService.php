@@ -24,8 +24,8 @@ class PizzaUpdaterService
         $ingredients = $pizza->ingredientList()->getValues();
         $ingredients[] = $ingredient;
 
-        $pizza = $this->pizzaService->initialize(
-            $pizza->name(),
+        $pizza = $this->pizzaService->reinitialize(
+            $pizza,
             new ArrayCollection($ingredients)
         );
 
@@ -44,8 +44,8 @@ class PizzaUpdaterService
             }
         }
 
-        $pizza = $this->pizzaService->initialize(
-            $pizza->name(),
+        $pizza = $this->pizzaService->reinitialize(
+            $pizza,
             new ArrayCollection($ingredients)
         );
 

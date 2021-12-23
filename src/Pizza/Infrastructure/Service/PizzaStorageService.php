@@ -22,8 +22,7 @@ class PizzaStorageService
         );
 
         if (!$item->isHit()) {
-            $item->expiresAfter(900); // expires after 15 min
-            $item->set($pizza);
+            return $pizza;
         }
 
         return $item->get();
@@ -34,6 +33,11 @@ class PizzaStorageService
         $item = $this->cache->getItem(
             (string) $pizza->uuid() . $this->requestStack->getCurrentRequest()->getSession()->getId()
         );
+
+        if (!$item->isHit()) {
+            $item->expiresAfter(900); // expires after 15 min
+        }
+
         $item->set($pizza);
 
         return $item->get();

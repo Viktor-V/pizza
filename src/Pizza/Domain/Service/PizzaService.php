@@ -21,19 +21,29 @@ class PizzaService
     ) {
     }
 
-    /**
-     * @param Collection<Ingredient> $ingredientList
-     */
     public function initialize(
         Name $name,
         Collection $ingredientList
     ): Pizza {
+        return new Pizza(new Uuid(), $name, $this->calculatePrice($ingredientList), $ingredientList);
+    }
+
+    public function reinitialize(
+        Pizza $pizza,
+        Collection $ingredientList
+    ): Pizza {
+        return new Pizza($pizza->uuid(), $pizza->name(), $this->calculatePrice($ingredientList), $ingredientList);
+    }
+
+    private function calculatePrice(Collection $ingredients): Money
+    {
         $price = 0;
-        foreach ($ingredientList as $ingredient) {
+        /** @var Ingredient $ingredient */
+        foreach ($ingredients as $ingredient) {
             $price += $ingredient->price()->amount()->value();
         }
         $price += ($price * $this->percentageToPrice / 100);
 
-        return new Pizza(new Uuid(), $name, new Money(new Amount($price), $this->currency), $ingredientList);
+        return new Money(new Amount($price), $this->currency);
     }
 }
