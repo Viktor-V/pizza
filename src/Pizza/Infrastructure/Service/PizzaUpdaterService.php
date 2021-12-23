@@ -36,19 +36,27 @@ class PizzaUpdaterService
     {
         $pizza = $this->pizzaStorageService->get($pizza);
 
-        $ingredients = $pizza->ingredientList()->getValues();
+        $pizza = $this->pizzaService->reinitialize(
+            $pizza,
+            new ArrayCollection(
+                $this->unsetIngredient($ingredient, $pizza->ingredientList()->getValues())
+            )
+        );
+
+        return $this->pizzaStorageService->set($pizza);
+    }
+
+    private function unsetIngredient(Ingredient $ingredient, array $ingredients): array
+    {
         /** @var Ingredient $item */
         foreach ($ingredients as $key => $item) {
             if ((string) $ingredient->uuid() === (string) $item->uuid()) {
                 unset($ingredients[$key]);
+
+                return $ingredients;
             }
         }
 
-        $pizza = $this->pizzaService->reinitialize(
-            $pizza,
-            new ArrayCollection($ingredients)
-        );
-
-        return $this->pizzaStorageService->set($pizza);
+        return $ingredients;
     }
 }
