@@ -6,6 +6,23 @@
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2
+ARG NODE_VERSION=14
+
+# node "stage"
+FROM node:${NODE_VERSION}-alpine AS symfony_assets_builder
+
+WORKDIR /srv/app
+
+RUN mkdir public
+
+COPY package.json yarn.lock ./
+
+RUN yarn install
+
+COPY assets assets/
+COPY webpack.config.js ./
+
+RUN yarn build
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS symfony_php
@@ -135,4 +152,5 @@ WORKDIR /srv/app
 COPY --from=dunglas/mercure:v0.11 /srv/public /srv/mercure-assets/
 COPY --from=symfony_caddy_builder /usr/bin/caddy /usr/bin/caddy
 COPY --from=symfony_php /srv/app/public public/
+COPY --from=symfony_assets_builder /srv/app/public/build public/build
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
