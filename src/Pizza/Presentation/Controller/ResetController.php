@@ -4,22 +4,32 @@ declare(strict_types=1);
 
 namespace App\Pizza\Presentation\Controller;
 
-use App\Money\Domain\Entity\Money;
-use App\Money\Domain\Type\Amount;
-use App\Money\Domain\Type\Currency;
-use App\Pizza\Domain\Entity\Ingredient;
-use App\Pizza\Domain\Service\PizzaService;
-use App\Pizza\Domain\Type\Name;
+use App\Identifier\Domain\Type\Uuid;
+use App\Pizza\Domain\Repository\Contract\PizzaRepositoryInterface;
+use App\Pizza\Infrastructure\Service\PizzaStorageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use ArrayIterator;
 
 class ResetController extends AbstractController
 {
-    #[Route(path: '/pizza/reset', name: 'pizza.reset', methods: ['GET'])]
-    public function __invoke(): Response
+    public function __construct(
+        private PizzaRepositoryInterface $pizzaRepository,
+        private PizzaStorageService $pizzaStorageService
+    ) {
+    }
+
+    #[Route(path: '/pizza/{uuid}/reset', name: 'pizza.reset', methods: ['GET'])]
+    public function __invoke(string $uuid): Response
     {
-        return $this->redirectToRoute('pizza.product');
+        $pizza = $this->pizzaRepository->find(new Uuid($uuid));
+        if (!$pizza) {
+            throw new NotFoundHttpException();
+        }
+
+        $this->pizzaStorageService->reset($pizza);
+
+        return $this->redirectToRoute('pizza.product', ['uuid' => $uuid]);
     }
 }

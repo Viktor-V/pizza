@@ -46,7 +46,7 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <a href="{{ path('pizza.reset') }}" class="btn-reset">{{ 'Reset' }}</a>
+                                    <a href="{{ path('pizza.reset', { uuid: pizza.uuid }) }}" class="btn-reset">{{ 'Reset' }}</a>
                                 </div>
 
                                 <div class="col-6">
